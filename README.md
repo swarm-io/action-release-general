@@ -13,20 +13,21 @@
 <!-- start examples -->
 ### Example usage
 ```yaml
-on: [push]
-
+name: Release
+on:
+  pull_request:
+    types:
+      - closed
+    branches:
+      - main
 jobs:
-  hello_world_job:
+  release:
     runs-on: ubuntu-latest
-    name: A job to say hello
+    name: Release
     steps:
-      - uses: actions/checkout@v2
-      - id: foo
-        uses: actions/hello-world-composite-action@v1
+      - uses: swarm-io/action-release-general@v1
         with:
-          who-to-greet: 'Mona the Octocat'
-      - run: echo random-number ${{ steps.foo.outputs.random-number }}
-        shell: bash
+          token: ${{ secrets.GIT_RUNNER_TOKEN }}
 ```
 <!-- end examples -->
 <!-- start [.github/ghdocs/examples/] -->
